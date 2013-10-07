@@ -1,0 +1,7 @@
+ #!/bin/bash
+TARGET=/etc/munin/plugins
+
+MUNIN_VARNISH=${buildout:directory}/bin/${varnish-munin:_buildout_section_name_}
+for suffix in `$MUNIN_VARNISH suggest`; do
+        ln -s $MUNIN_VARNISH $TARGET/varnish_${varnish-munin:name}__$suffix
+done

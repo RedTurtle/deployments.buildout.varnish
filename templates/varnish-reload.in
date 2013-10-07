@@ -1,0 +1,20 @@
+#!/bin/bash
+# Reload a varnish config
+# Author: Kristian Lyngstol
+FILE="${varnish-config:output}"
+# Hostname and management port
+PATH=${buildout:parts-directory}/varnish-build/bin:$PATH
+HOSTPORT="${varnish:telnet}"
+
+NOW=`date +%s`
+
+error() {
+    echo 1>&2 "Failed to reload $FILE."
+    exit 1
+}
+
+varnishadm -T $HOSTPORT vcl.load reload$NOW $FILE || error
+varnishadm -T $HOSTPORT vcl.use reload$NOW || error
+echo Current configs:
+varnishadm -T $HOSTPORT vcl.list
+# end
