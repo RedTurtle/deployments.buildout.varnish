@@ -17,7 +17,10 @@ make
 ## For the impatients ##
 To start the buildout:
 ```bash
-python2.7 bootstrap.py &&  ./bin/buildout
+virtualenv --no-site-packages .
+./bin/pip install -Ur requirements.txt
+ln -sf profiles/default.cfg buildout.cfg
+./bin/buildout
 ```
 To launch varnish:
 ```bash
@@ -25,7 +28,7 @@ To launch varnish:
 ```
 
 ## Requirements ##
-You may want to install this to get this buildout working:
+You may want to install some dependencies to make this buildout work:
 ```bash
 # python stuff
 apt-get install python-dev python-virtualenv
@@ -34,9 +37,9 @@ apt-get install libpcre++-dev libreadline-dev
 ```
 
 ## How to modify this buildout ##
-The varnish template for the configuration 
+The varnish template for the configuration
 is in `templates/varnish.vcl.in`.
-This template is inspired by 
+This template is inspired by
 http://developer.plone.org/hosting/varnish.html#id12.
 The buildout will compile this file and create a file in `etc/varnish.vcl`.
 
