@@ -1,7 +1,10 @@
-bin/*
-eggs/*
-etc/*
-develop-eggs/*
-etc/*
-include
-lib
+/bin/*
+/buildout.cfg
+/eggs/*
+/etc/*
+/develop-eggs/*
+/etc/*
+/include
+/lib
+/local
+/pip-selfcheck.json
