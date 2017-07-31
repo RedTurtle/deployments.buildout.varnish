@@ -44,7 +44,12 @@ sub vcl_recv {
         if (!client.ip ~ purge) {
                 error 405 "Not allowed.";
         }
-        ban("obj.http.x-url == " +  req.url);
+        if (req.url ~ "^/@@purgebyid/") {
+            ban("obj.http.x-ids-involved ~ #" + regsub(req.url, "^/@@purgebyid/", "") + "#");
+        }
+        else {
+            ban("obj.http.x-url == " +  req.url);
+        }
         error 200 "Purged";
     }
     if (req.request != "GET" && req.request != "HEAD") {
