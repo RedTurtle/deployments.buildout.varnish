@@ -1,3 +1,7 @@
+.python-version
+lib64
+pyvenv.cfg
+share/
 /.installed.cfg
 /bin/*
 /buildout.cfg

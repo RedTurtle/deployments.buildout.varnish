@@ -1,7 +1,0 @@
- #!/bin/bash
-TARGET=/etc/munin/plugins
-
-MUNIN_VARNISH=${:varnish_plugin}
-for suffix in `$MUNIN_VARNISH suggest`; do
-        ln -s $MUNIN_VARNISH $TARGET/varnish_${varnish-munin:name}__$suffix
-done
