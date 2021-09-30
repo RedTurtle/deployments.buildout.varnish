@@ -40,6 +40,11 @@ sub vcl_recv {
     set req.grace = 120s;
     set req.backend = default;
 
+    if (req.url ~ "^/@@purgebyid/") {
+        ban("obj.http.x-ids-involved ~ #" + regsub(req.url, "^/@@purgebyid/", "") + "#");
+        return(synth(200, "Ban added"));
+    }
+    
     if (req.request == "PURGE") {
         if (!client.ip ~ purge) {
                 error 405 "Not allowed.";
