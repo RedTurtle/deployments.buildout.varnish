@@ -1,10 +1,10 @@
 #!/bin/bash
 # Reload a varnish config
 # Author: Kristian Lyngstol
-FILE="${varnish-config:output}"
+FILE="${buildout:parts-directory}/varnish-configuration/varnish.vcl"
 # Hostname and management port
 PATH=${buildout:parts-directory}/varnish-build/bin:$PATH
-HOSTPORT="${varnish:telnet}"
+HOSTPORT="${varnish-script:telnet}"
 
 NOW=`date +%s`
 
@@ -13,8 +13,8 @@ error() {
     exit 1
 }
 
-varnishadm -T $HOSTPORT vcl.load reload$NOW $FILE || error
-varnishadm -T $HOSTPORT vcl.use reload$NOW || error
+varnishadm -T $HOSTPORT -S ${buildout:directory}/var/varnish_secret vcl.load reload$NOW $FILE || error
+varnishadm -T $HOSTPORT -S ${buildout:directory}/var/varnish_secret vcl.use reload$NOW || error
 echo Current configs:
-varnishadm -T $HOSTPORT vcl.list
+varnishadm -T $HOSTPORT -S ${buildout:directory}/var/varnish_secret vcl.list
 # end
